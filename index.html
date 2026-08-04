@@ -91,10 +91,10 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
       display: flex;
       flex-direction: column;
-      justify-content: flex-start; /* 상단 정렬로 라벨 위치 고정 */
+      justify-content: flex-start;
       align-items: center;
       border: 1px solid #e2e8f0;
-      padding-top: 12px; /* 라벨 상단 여백 통일 */
+      padding-top: 12px;
     }
 
     /* 상단 스프링 바인더 링 2개 (달력/날씨 카드 공통) */
@@ -129,16 +129,16 @@
       font-weight: 700;
       color: #5b736e;
       text-align: center;
-      margin-bottom: 8px; /* 아래 콘텐츠와의 간격 통일 */
-      height: 1rem; /* 라벨 높이 고정 */
+      margin-bottom: 8px;
+      height: 1rem;
       line-height: 1rem;
     }
 
-    /* 날씨 아이콘 영역 */
+    /* 날씨 아이콘 영역 (위치 조정을 위해 margin-top 변경) */
     .weather-icon {
       font-size: 1.8rem;
       line-height: 1;
-      margin-top: 2px;
+      margin-top: 8px; /* 기존 2px에서 8px로 변경하여 인접 카드 숫자와 중심 맞춤 */
     }
 
     /* 기온 표시 영역 */
