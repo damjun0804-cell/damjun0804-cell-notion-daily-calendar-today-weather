@@ -67,7 +67,7 @@
       margin: 0 4px;
     }
 
-    /* 달력 카드 전용 (1자리 숫자 카드) */
+    /* 달력 카드 전용 */
     .date-card {
       position: relative;
       width: 58px;
@@ -81,7 +81,7 @@
       border: 1px solid #e2e8f0;
     }
 
-    /* 날씨 카드 전용 (폭 확장: 72px) */
+    /* 날씨 카드 전용 */
     .weather-card {
       position: relative;
       width: 72px;
@@ -91,9 +91,10 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start; /* 상단 정렬로 라벨 위치 고정 */
       align-items: center;
       border: 1px solid #e2e8f0;
+      padding-top: 12px; /* 라벨 상단 여백 통일 */
     }
 
     /* 상단 스프링 바인더 링 2개 (달력/날씨 카드 공통) */
@@ -122,15 +123,30 @@
       font-family: 'Arial Round', -apple-system, sans-serif;
     }
 
-    /* 날씨 상태 아이콘 및 텍스트 */
-    .weather-icon { font-size: 1.8rem; line-height: 1; margin-bottom: 2px; }
-    .weather-text { font-size: 0.68rem; font-weight: 700; color: #5b736e; text-align: center; }
+    /* 날씨 카드 상단 라벨 스타일 통일 */
+    .weather-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #5b736e;
+      text-align: center;
+      margin-bottom: 8px; /* 아래 콘텐츠와의 간격 통일 */
+      height: 1rem; /* 라벨 높이 고정 */
+      line-height: 1rem;
+    }
 
-    /* 기온 표시 영역 (겹침 방지 가로 배치) */
+    /* 날씨 아이콘 영역 */
+    .weather-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    /* 기온 표시 영역 */
     .temp-wrapper {
       display: flex;
       align-items: baseline;
       justify-content: center;
+      margin-top: 4px;
     }
     .temp-digit {
       font-size: 2.3rem;
@@ -147,17 +163,11 @@
     }
 
     /* 강수확률 표시 영역 */
-    .pop-label {
-      font-size: 0.58rem;
-      font-weight: 700;
-      color: #868e96;
-      margin-bottom: 2px;
-      text-transform: uppercase;
-    }
     .pop-wrapper {
       display: flex;
       align-items: baseline;
       justify-content: center;
+      margin-top: 4px;
     }
     .pop-digit {
       font-size: 2.2rem;
@@ -205,16 +215,16 @@
     <!-- 구분선 -->
     <div class="divider"></div>
 
-    <!-- 2. 날씨 카드 그룹 (카드 폭 확장 및 레이아웃 정리) -->
+    <!-- 2. 날씨 카드 그룹 -->
     <div class="section-group">
       <!-- 날씨 상태 -->
       <div class="weather-card">
-        <div id="weather-text" class="weather-text">로딩중</div>
+        <div id="weather-text" class="weather-label">로딩중</div>
         <div id="weather-icon" class="weather-icon">⏳</div>
       </div>
       <!-- 기온 -->
       <div class="weather-card">
-        <div class="pop-label">오늘의 온도</div>
+        <div class="weather-label">오늘의 온도</div>
         <div class="temp-wrapper">
           <span id="temp" class="temp-digit">--</span>
           <span class="temp-unit">°C</span>
@@ -222,7 +232,7 @@
       </div>
       <!-- 강수확률 -->
       <div class="weather-card">
-        <div class="pop-label">강수확률</div>
+        <div class="weather-label">강수확률</div>
         <div class="pop-wrapper">
           <span id="pop" class="pop-digit">--</span>
           <span class="pop-unit">%</span>
