@@ -270,8 +270,8 @@
       const data = await response.json();
 
       const currentWeather = data.current_weather;
-      const temp = Math.round(currentWeather.temperature);
       const status = getWeatherStatus(currentWeather.weathercode);
+      const temp = Math.round(currentWeather.temperature);
 
       const currentHourISO = currentWeather.time.substring(0, 13) + ":00";
       const hourlyTimes = data.hourly.time;
