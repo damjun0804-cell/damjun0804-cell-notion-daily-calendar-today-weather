@@ -19,7 +19,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    /* 달력 + 날씨 통합 세이지 그린 탁상 스탠드 */
+    /* 스탠드 전체 너비 확장 */
     .combined-stand {
       position: relative;
       background: #7a948e; /* 세이지 그린 색상 */
@@ -51,14 +51,14 @@
       flex: 1;
     }
 
-    /* 섹션 구분 (달력 그룹 / 날씨 그룹) */
+    /* 섹션 구분 */
     .section-group {
       display: flex;
       gap: 8px;
       align-items: center;
     }
 
-    /* 달력과 날씨 사이의 수직 구분선 */
+    /* 수직 구분선 */
     .divider {
       width: 2px;
       height: 75px;
@@ -67,10 +67,24 @@
       margin: 0 4px;
     }
 
-    /* 공통 카드 스타일 */
-    .card {
+    /* 달력 카드 전용 (1자리 숫자 카드) */
+    .date-card {
       position: relative;
       width: 58px;
+      height: 92px;
+      background: #ffffff;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* 날씨 카드 전용 (폭 확장: 72px) */
+    .weather-card {
+      position: relative;
+      width: 72px;
       height: 92px;
       background: #ffffff;
       border-radius: 6px;
@@ -82,8 +96,9 @@
       border: 1px solid #e2e8f0;
     }
 
-    /* 상단 스프링 바인더 링 2개 */
-    .card::before, .card::after {
+    /* 상단 스프링 바인더 링 2개 (달력/날씨 카드 공통) */
+    .date-card::before, .date-card::after,
+    .weather-card::before, .weather-card::after {
       content: '';
       position: absolute;
       top: -12px;
@@ -95,8 +110,8 @@
       z-index: 10;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    .card::before { left: 9px; }
-    .card::after { right: 9px; }
+    .date-card::before, .weather-card::before { left: 10px; }
+    .date-card::after, .weather-card::after { right: 10px; }
 
     /* 달력 숫자 스타일 */
     .digit {
@@ -107,30 +122,56 @@
       font-family: 'Arial Round', -apple-system, sans-serif;
     }
 
-    /* 날씨 카드 내부 스타일 */
-    .weather-icon { font-size: 1.9rem; line-height: 1; margin-bottom: 2px; }
+    /* 날씨 상태 아이콘 및 텍스트 */
+    .weather-icon { font-size: 1.8rem; line-height: 1; margin-bottom: 2px; }
     .weather-text { font-size: 0.68rem; font-weight: 700; color: #5b736e; text-align: center; }
 
-    /* 기온 표시 스타일 */
+    /* 기온 표시 영역 (겹침 방지 가로 배치) */
+    .temp-wrapper {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
     .temp-digit {
-      font-size: 2.6rem;
+      font-size: 2.3rem;
       font-weight: 800;
       color: #7a948e;
       line-height: 1;
       font-family: 'Arial Round', -apple-system, sans-serif;
     }
-    .temp-unit { font-size: 1.1rem; font-weight: 600; color: #7a948e; position: relative; top: -12px; }
+    .temp-unit {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #7a948e;
+      margin-left: 2px;
+    }
 
-    /* 강수확률 스타일 */
-    .pop-label { font-size: 0.58rem; font-weight: 700; color: #868e96; margin-bottom: 2px; text-transform: uppercase; }
+    /* 강수확률 표시 영역 */
+    .pop-label {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: #868e96;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+    }
+    .pop-wrapper {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+    }
     .pop-digit {
-      font-size: 2.3rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: #3b82f6;
       line-height: 1;
       font-family: 'Arial Round', -apple-system, sans-serif;
     }
-    .pop-unit { font-size: 0.85rem; font-weight: 700; color: #3b82f6; margin-left: 1px; }
+    .pop-unit {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #3b82f6;
+      margin-left: 1px;
+    }
 
     /* 하단 라벨 안내 */
     .labels-bar {
@@ -153,32 +194,35 @@
   <div class="top-bar"></div>
   
   <div class="cards-wrapper">
-    <!-- 1. 달력 카드 그룹 (월 2자리, 일 2자리) -->
+    <!-- 1. 달력 카드 그룹 -->
     <div class="section-group">
-      <div class="card"><span id="m1" class="digit">0</span></div>
-      <div class="card"><span id="m2" class="digit">0</span></div>
-      <div class="card"><span id="d1" class="digit">0</span></div>
-      <div class="card"><span id="d2" class="digit">0</span></div>
+      <div class="date-card"><span id="m1" class="digit">0</span></div>
+      <div class="date-card"><span id="m2" class="digit">0</span></div>
+      <div class="date-card"><span id="d1" class="digit">0</span></div>
+      <div class="date-card"><span id="d2" class="digit">0</span></div>
     </div>
 
-    <!-- 섹션 구분선 -->
+    <!-- 구분선 -->
     <div class="divider"></div>
 
-    <!-- 2. 날씨 카드 그룹 (상태, 기온, 강수확률) -->
+    <!-- 2. 날씨 카드 그룹 (카드 폭 확장 및 레이아웃 정리) -->
     <div class="section-group">
-      <div class="card">
+      <!-- 날씨 상태 -->
+      <div class="weather-card">
         <div id="weather-icon" class="weather-icon">⏳</div>
         <div id="weather-text" class="weather-text">로딩중</div>
       </div>
-      <div class="card">
-        <div>
+      <!-- 기온 -->
+      <div class="weather-card">
+        <div class="temp-wrapper">
           <span id="temp" class="temp-digit">--</span>
           <span class="temp-unit">°C</span>
         </div>
       </div>
-      <div class="card">
-        <div class="pop-label">PRECIP</div>
-        <div>
+      <!-- 강수확률 -->
+      <div class="weather-card">
+        <div class="pop-label">강수확</div>
+        <div class="pop-wrapper">
           <span id="pop" class="pop-digit">--</span>
           <span class="pop-unit">%</span>
         </div>
@@ -187,13 +231,13 @@
   </div>
 
   <div class="labels-bar">
-    <span>DATE</span>
-    <span>ANSAN WEATHER</span>
+    <span>월</span>
+    <span>일</span>
+    <span>경기도 안산시 상록구 날씨</span>
   </div>
 </div>
 
 <script>
-  // 1. 달력 날짜 업데이트
   function updateCalendar() {
     const today = new Date();
     const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -205,7 +249,6 @@
     document.getElementById('d2').innerText = day[1];
   }
 
-  // 2. 안산시 상록구 날씨 업데이트 (Open-Meteo API)
   const LAT = 37.3039;
   const LON = 126.8531;
 
@@ -249,10 +292,9 @@
     }
   }
 
-  // 실행 및 자동 갱신 설정
   updateCalendar();
   fetchWeather();
-  setInterval(fetchWeather, 600000); // 10분 마다 날씨 갱신
+  setInterval(fetchWeather, 600000);
 </script>
 
 </body>
